@@ -1,6 +1,7 @@
 package com.epam.core.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,10 +13,10 @@ import java.util.*;
 public class CareersPage {
     private WebDriver driver;
 
-    @FindBy(how = How.XPATH, using = "//*[@class=\"job-search__input job-search__input--js-autocomplete\"]")
+    @FindBy(how = How.XPATH, using = "//input[contains(@class, 'job-search__input job-search__input--js-autocomplete')]")
     private WebElement keyWordsField;
 
-    @FindBy(how = How.CLASS_NAME, using = "arrow")
+    @FindBy(how = How.CLASS_NAME, using = "job-search__location")
     private WebElement locationsDropdown;
 
     @FindBy(how = How.XPATH, using = "//li[text() = 'cityToChoose']")
@@ -27,9 +28,6 @@ public class CareersPage {
     @FindBy(how = How.CLASS_NAME, using = "job-search__submit")
     private WebElement searchButton;
 
-    @FindBy(how = How.CLASS_NAME, using = "job-search__submit")
-    private WebElement resultsDescription;
-
     public CareersPage(WebDriver webDriverInstance){
         this.driver = webDriverInstance;
         PageFactory.initElements(driver, this );
@@ -40,7 +38,7 @@ public class CareersPage {
         locationsDropdown.click();
         getCityFromDropdown(cityName).click();
         filterByParams.click();
-        getFilterFromDropdown(filterName).click();
+        getFilterFromDropdown(filterName);
         searchButton.click();
         return getVacanciesDescription();
     }
@@ -50,7 +48,10 @@ public class CareersPage {
     }
 
     private WebElement getFilterFromDropdown(String filterName){
-        return driver.findElement(By.xpath("//div/ul[2]/li[2]/label/span"));
+        WebElement dropdownElement = driver.findElement(By.xpath("//span[contains(text(), '" + filterName +"')]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", dropdownElement);
+        return dropdownElement;
     }
 
     private ArrayList <String> getVacanciesDescription(){
