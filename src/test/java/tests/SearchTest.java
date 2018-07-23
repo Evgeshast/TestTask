@@ -6,26 +6,29 @@ import com.epam.core.pages.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SearchTest {
 
-    private String TEST_URL = "https://careers.epam.by/";
-    CareersPage careerPage;
+    private static final String TEST_URL = "https://careers.epam.by/";
+
+    private CareersPage careerPage;
 
     @BeforeClass
-    public void prepare() {
+    public void beforeClass() {
         Driver.getWebDriverInstance().get(TEST_URL);
         Driver.getWebDriverInstance().manage().window().maximize();
         HomePage homePage = new HomePage(Driver.getWebDriverInstance());
         careerPage = homePage.goToCareersPage();
     }
 
-    @Test
-    public void searchTest() {
-        ArrayList<String> result = careerPage.search("Java Developer","Минск", "Разработка");
+    @Test(dataProvider = "searchDataProvider")
+    public void searchTest(String career, String city, String filter) {
+        ArrayList<String> result = careerPage.search(career, city, filter);
         Assert.assertEquals(result.size(), 8);
         for(String vacancy : result){
                 System.out.println(vacancy);
@@ -37,4 +40,8 @@ public class SearchTest {
        Driver.closeDriver();
     }
 
+    @DataProvider(name = "searchDataProvider")
+    public  Object[][] dataProvider(){
+        return new Object[][] { new Object[] {"Java Developer", "Минск", "Разработка"}};
+    }
 }
