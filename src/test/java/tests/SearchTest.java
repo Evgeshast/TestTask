@@ -4,7 +4,6 @@ import com.epam.core.drivers.Driver;
 import com.epam.core.pages.CareersPage;
 import com.epam.core.pages.HomePage;
 import org.testng.Assert;
-import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -17,7 +16,7 @@ public class SearchTest {
     CareersPage careerPage;
 
     @BeforeClass
-    public void prepare(ITestContext context) throws Exception {
+    public void prepare() {
         Driver.getWebDriverInstance().get(TEST_URL);
         Driver.getWebDriverInstance().manage().window().maximize();
         HomePage homePage = new HomePage(Driver.getWebDriverInstance());

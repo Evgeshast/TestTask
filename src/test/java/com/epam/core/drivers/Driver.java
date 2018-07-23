@@ -24,13 +24,8 @@ public class Driver {
         if (!instances.containsKey(name)) {
             switch (type) {
                 case FIREFOX: {
-                    System.setProperty("webdriver.gecko.driver", "C:\\geckodriver\\geckodriver.exe");
+                    System.setProperty("webdriver.gecko.driver", "src/test/resources/driverbinaries/geckodriver.exe");
                     driver = new FirefoxDriver();
-                    break;
-                }
-                case IE: {
-                    System.setProperty("webdriver.ie.driver", "src/test/resources/driverbinaries/IEDriverServer.exe");
-                    driver = new InternetExplorerDriver();
                     break;
                 }
                 case CHROME: {
