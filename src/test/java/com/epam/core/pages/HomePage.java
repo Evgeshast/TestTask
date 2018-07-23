@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage {
     private WebDriver driver;
 
-    @FindBy(how = How.CLASS_NAME, using = "top-navigation__link")
+    @FindBy(how = How.XPATH, using = "//a[@href='/careers']")
     private WebElement CareersButton;
 
     public HomePage(WebDriver webDriverInstance){
