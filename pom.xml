@@ -15,15 +15,8 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <version>3.0.0-beta1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-server</artifactId>
             <version>3.0.1</version>
         </dependency>
     </dependencies>
-
 </project>
