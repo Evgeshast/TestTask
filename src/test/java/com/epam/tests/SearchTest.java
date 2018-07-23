@@ -1,4 +1,4 @@
-package tests;
+package com.epam.tests;
 
 import com.epam.core.drivers.Driver;
 import com.epam.core.pages.CareersPage;
@@ -10,7 +10,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class SearchTest {
 
