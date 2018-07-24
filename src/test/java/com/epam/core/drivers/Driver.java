@@ -19,25 +19,12 @@ public class Driver {
         instances = new HashMap<String, WebDriver>();
     }
 
-    public static WebDriver getWebDriverInstance(String name, DriverTypes type) {
+    private static WebDriver getWebDriverInstance(String name, DriverTypes type) {
         WebDriver driver;
         if (!instances.containsKey(name)) {
-            switch (type) {
-                case FIREFOX: {
-                    System.setProperty("webdriver.gecko.driver", "src/test/resources/driverbinaries/geckodriver.exe");
-                    driver = new FirefoxDriver();
-                    break;
-                }
-                case CHROME: {
-                    System.setProperty("webdriver.chrome.driver", "src/test/resources/driverbinaries/chromedriver.exe");
-                    driver = new ChromeDriver();
-                    break;
-                }
-                default:
-                    driver = new FirefoxDriver();
-                    break;
-            }
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            System.setProperty("webdriver.chrome.driver", "src/test/resources/driverbinaries/chromedriver.exe");
+            driver = new ChromeDriver();
+            driver.manage().timeouts().implicitlyWait(35, TimeUnit.SECONDS);
             instances.put(name, driver);
         } else {
             driver = instances.get(name);
@@ -45,12 +32,13 @@ public class Driver {
         return driver;
     }
 
-    public static WebDriver getWebDriverInstance(String name) {
-        return getWebDriverInstance(name, defaultDriverType);
-    }
-
     public static WebDriver getWebDriverInstance() {
         return getWebDriverInstance(DEFAULT_WEB_DRIVER, defaultDriverType);
+    }
+
+    public static void goToURL(String url) {
+        getWebDriverInstance().get(url);
+        getWebDriverInstance().manage().window().maximize();
     }
 
     public static void closeDriver() {

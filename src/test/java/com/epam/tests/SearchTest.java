@@ -19,28 +19,27 @@ public class SearchTest {
 
     @BeforeClass
     public void beforeClass() {
-        Driver.getWebDriverInstance().get(TEST_URL);
-        Driver.getWebDriverInstance().manage().window().maximize();
+        Driver.goToURL(TEST_URL);
         HomePage homePage = new HomePage(Driver.getWebDriverInstance());
         careerPage = homePage.goToCareersPage();
     }
 
     @Test(dataProvider = "searchDataProvider")
-    public void searchTest(String career, String city, String filter) {
+    public void searchTest(String career, String city, String filter, int expectedResult) {
         ArrayList<String> result = careerPage.search(career, city, filter);
-        Assert.assertEquals(result.size(), 8);
+        Assert.assertEquals(expectedResult, result.size());
         for(String vacancy : result){
-                System.out.println(vacancy);
+            System.out.println(vacancy);
         }
     }
 
     @AfterClass
     public void afterClass() {
-       Driver.closeDriver();
+        Driver.closeDriver();
     }
 
     @DataProvider(name = "searchDataProvider")
     public  Object[][] dataProvider(){
-        return new Object[][] { new Object[] {"Java Developer", "Минск", "Разработка"}};
+        return new Object[][] { new Object[] {"Java Developer", "Минск", "Разработка", 8}};
     }
 }
