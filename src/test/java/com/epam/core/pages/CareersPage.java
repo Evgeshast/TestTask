@@ -28,6 +28,12 @@ public class CareersPage {
     @FindBy(how = How.CLASS_NAME, using = "job-search__submit")
     private WebElement searchButton;
 
+    @FindBy(how = How.CLASS_NAME, using = "search-result__heading")
+    private WebElement resultsHeader;
+
+    @FindBy(how = How.CLASS_NAME, using = "job-search__error-message")
+    private WebElement errorMessage;
+
     public CareersPage(WebDriver webDriverInstance){
         this.driver = webDriverInstance;
         PageFactory.initElements(driver, this );
@@ -61,5 +67,18 @@ public class CareersPage {
             vacanciesDescription.add(vacancy.getText());
         }
         return vacanciesDescription;
+    }
+
+    public int getNumberOfResults(){
+        if(errorMessage.isDisplayed()){
+            return 0;
+        }else {
+            for (int i = 0; i < resultsHeader.getText().toCharArray().length; i++) {
+                if (resultsHeader.getText().charAt(i) == ':') {
+                    return Integer.parseInt(resultsHeader.getText().substring(i + 2));
+                }
+            }
+        }
+        return 0;
     }
 }

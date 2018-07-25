@@ -19,15 +19,16 @@ public class SearchTest {
 
     @BeforeClass
     public void beforeClass() {
+        System.setProperty("file.encoding", "UTF-8");
         Driver.goToURL(TEST_URL);
         HomePage homePage = new HomePage(Driver.getWebDriverInstance());
         careerPage = homePage.goToCareersPage();
     }
 
     @Test(dataProvider = "searchDataProvider")
-    public void searchTest(String career, String city, String filter, int expectedResult) {
+    public void searchTest(String career, String city, String filter) {
         ArrayList<String> result = careerPage.search(career, city, filter);
-        Assert.assertEquals(expectedResult, result.size());
+        Assert.assertEquals(careerPage.getNumberOfResults(), result.size());
         for(String vacancy : result){
             System.out.println(vacancy);
         }
@@ -40,6 +41,6 @@ public class SearchTest {
 
     @DataProvider(name = "searchDataProvider")
     public  Object[][] dataProvider(){
-        return new Object[][] { new Object[] {"Java Developer", "Минск", "Разработка", 8}};
+        return new Object[][] { new Object[] {"Java Developer", "Минск", "Разработка"}};
     }
 }
